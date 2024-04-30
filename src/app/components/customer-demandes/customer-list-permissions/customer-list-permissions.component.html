@@ -1,0 +1,167 @@
+
+<div class="hero-header ">
+    <div class="container-fluid"></div>
+</div>
+
+
+<div class="hero-body">
+    <div class="container-fluid">
+        <!-- Row start -->
+        <div class="row gx-3">
+            <div class="col-xxl-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="card-title fw-bolder fs-5">
+                            <button mat-button class="default__btn__lg">
+                                <mat-icon class="example-tab-icon text-dark">view_list</mat-icon>
+                                <span class="fw-bolder text-dark ">Mes permissions</span>
+                            </button>
+                            <button  mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+
+                                {{ customer_permission_counter }}
+                            </button>
+                        </div>
+
+                        <div>
+
+                            <button mat-mini-fab
+                                [matMenuTriggerFor]="guideInfo">
+                                <mat-icon>info</mat-icon>
+                            </button>
+
+                            <mat-menu #guideInfo="matMenu"
+                                xPosition="before">
+
+                                <button    mat-menu-item>
+                                    <mat-icon class="text-primary">verified</mat-icon>
+                                    <span class="">Indique qu'une permission a été<code class="fw-bolder">validée</code></span>
+                                </button>
+                                <button   mat-menu-item>
+                                    <mat-icon class="text-red">verified</mat-icon>
+                                    <span>Indique qu'une permission a été <code class="fw-bolder"> rejetée </code> </span>
+                                </button>
+
+                                <button   mat-menu-item>
+                                    <mat-icon class="text-warning">verified</mat-icon>
+                                    <span>Indique  <code class="fw-bolder"> Aucune action </code> sur la permission </span>
+                                </button>
+
+                                <button   mat-menu-item>
+                                    <mat-icon class="text-primary">check_circle</mat-icon>
+                                    <span>Indique que la permission a été <code class="fw-bolder">consultée</code> </span>
+                                </button>
+                                <button   mat-menu-item>
+                                    <mat-icon class="text-warning">check_circle</mat-icon>
+                                    <span>Indique une <code class="fw-bolder">nouvelle demande</code>  de permission </span>
+                                </button>
+
+                            </mat-menu>
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+
+                        <div class="row gx-3">
+                            <div class="col-xxl-12 col-sm-12 col-12">
+
+                                <div class="table-responsive mt-4">
+                                    <table class="table table-striped m-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">#ID</th>
+                                                <th class="text-center">Motif</th>
+                                                <th class="text-center">Fonction</th>
+                                                <th class="text-center">Service</th>
+                                                <th class="text-center">Etat</th>
+                                                <th class="text-center">Statut</th>
+                                                <th class="text-center">Date de publication</th>
+                                                <th class="text-center">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let customer_permissions of list_customer_permissions | paginate: { itemsPerPage: 20, currentPage: p }">
+                                                <td>{{ customer_permissions.id }}</td>
+                                                <td class="text-center" width="400" style="white-space: unset !important;">
+                                                    {{ customer_permissions.motif   }}
+                                                </td>
+
+                                                <td class="text-center"><p>{{ customer_permissions.fonction }}</p></td>
+                                                <td class="text-center"><p>{{ customer_permissions.service }}</p></td>
+                                                <td class="text-center">
+                                                    <button [matTooltip]="customer_permissions.responsable_new_actions == 1?'Consulter':'Nouveau'"  mat-icon-button>
+                                                        <mat-icon [class]="customer_permissions.responsable_new_actions == 1?'text-primary':'text-warning'">check_circle</mat-icon>
+                                                    </button>
+                                                </td>
+                                                <td class="text-center">
+                                                    <button matTooltip="Approuvée" *ngIf="customer_permissions.status_on == 1" mat-icon-button>
+                                                        <mat-icon class="text-primary">verified</mat-icon>
+                                                    </button>
+
+                                                    <button matTooltip="Réjetée" *ngIf="customer_permissions.status_off == 1" mat-icon-button>
+                                                        <mat-icon class="text-red">verified</mat-icon>
+                                                    </button>
+
+                                                    <button matTooltip="Aucune action" *ngIf="customer_permissions.status_on == 0 && customer_permissions.status_off == 0" mat-icon-button>
+                                                        <mat-icon class="text-warning">verified</mat-icon>
+                                                    </button>
+
+                                                </td>
+                                                <td class="text-end">
+                                                    <p >{{ customer_permissions.created_at | date: 'd MMMM yyyy, à HH:mm' }}</p>
+
+                                                </td>
+
+                                                <td class="text-end">
+                                                    <button mat-mini-fab color="primary"
+                                                        [matMenuTriggerFor]="beforeMenu">
+                                                        <mat-icon>more_vert</mat-icon>
+                                                    </button>
+                                                    <mat-menu #beforeMenu="matMenu"
+                                                        xPosition="before">
+                                                        <button (click)="consultePermission(customer_permissions)" mat-menu-item>
+                                                            <mat-icon>visibility</mat-icon>
+                                                            Consulter
+                                                        </button>
+                                                        <button (click)="updateCustomerPermission(customer_permissions.slug)"  mat-menu-item>
+                                                            <mat-icon>border_color</mat-icon>
+                                                            Modifier
+                                                        </button>
+                                                        <button (click)="deletePermission(customer_permissions.slug)" mat-menu-item>
+                                                            <mat-icon>delete</mat-icon>
+                                                            Supprimer
+                                                        </button>
+                                                    </mat-menu>
+                                                </td>
+
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="mt-4 text-center">
+                                    <pagination-controls
+                                        (pageChange)="p = $event"
+                                        previousLabel="Précédent"
+                                        nextLabel="Suivant"
+                                    >
+
+                                    </pagination-controls>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Row end -->
+    </div>
+</div>
+
+<ngx-spinner type="ball-circus" size="large" color="#ef8f01"
+    [fullScreen]="true">
+    <p style="color: #fff; font-size: 1.2rem"> Chargement en cours... </p>
+</ngx-spinner>

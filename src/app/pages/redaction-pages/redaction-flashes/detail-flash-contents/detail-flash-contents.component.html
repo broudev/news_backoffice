@@ -1,0 +1,74 @@
+<div class="hero-header ">
+    <div class="container-fluid">
+        <!-- Row start -->
+        <div class="row gx-3">
+            <div class="col-xxl-12">
+
+            </div>
+        </div>
+        <!-- Row end -->
+    </div>
+</div>
+
+<div class="hero-body ">
+    <div class="container-fluid">
+        <!-- Row start -->
+        <div class="row gx-3">
+            <div class="col-xxl-12">
+                <div class="card">
+                    @if (loading == true) {
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    }
+
+                    <div class="card-body">
+
+                        <div class="row gx-3 mb-3">
+                            <div class="col-lg-12">
+                                <h1 class="text-start text-primary fw-bolder">
+                                    Détail du flash
+                                    <button mat-fab extended color="primary">
+                                        <mat-icon>edit</mat-icon>
+                                        Modifier
+                                    </button>
+                                </h1>
+                            </div>
+
+                        </div>
+
+                        <div class="row gx-3 mb-3">
+                            <div class="col-lg-12">
+
+                                <div class="row">
+                                    <div class="col-lg-12 mb-3">
+                                        <h2>{{ rubrique_libelle }}</h2>
+                                    </div>
+
+
+                                    <div class="col-lg-12 mb-3">
+                                        <h3 class="mb-3">Le messange</h3>
+
+                                        <div class="well border-bottom border-danger">
+                                            {{ contents }}
+                                        </div>
+
+                                    </div>
+
+
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Row end -->
+    </div>
+</div>
+<ngx-spinner type = "ball-circus" size = "large" color = "#ef8f01" [fullScreen] = "true">
+    <p style="color: #fff; font-size: 1.2rem" > Chargement en cours... </p>
+</ngx-spinner>

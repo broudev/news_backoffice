@@ -1,0 +1,180 @@
+
+
+<div class="hero-header ">
+    <div class="container-fluid"></div>
+</div>
+
+<div class="hero-body">
+    <div class="container-fluid">
+        <!-- Row start -->
+        <div class="row gx-3">
+            <div class="col-xxl-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="card-title fw-bolder ">
+                            <button mat-button class="default__btn__lg">
+                                <mat-icon class="example-tab-icon text-dark">view_list</mat-icon>
+                                <span class="fw-bolder text-dark">Mes conges</span>
+                            </button>
+                            <button  mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                                {{ customer_conge_counter }}
+                            </button>
+                        </div>
+
+                        <div>
+
+                            <button mat-mini-fab
+                                [matMenuTriggerFor]="guideInfo">
+                                <mat-icon>info</mat-icon>
+                            </button>
+
+                            <mat-menu #guideInfo="matMenu"
+                                xPosition="before">
+
+                                <button    mat-menu-item>
+                                    <mat-icon class="text-primary">verified</mat-icon>
+                                    <span class="">Indique que le congé a été<code class="fw-bolder">validé</code></span>
+                                </button>
+                                <button   mat-menu-item>
+                                    <mat-icon class="text-red">verified</mat-icon>
+                                    <span>Indique que le congé a été <code class="fw-bolder"> rejeté </code> </span>
+                                </button>
+
+                                <button   mat-menu-item>
+                                    <mat-icon class="text-warning">verified</mat-icon>
+                                    <span>Indique  <code class="fw-bolder"> Aucune action </code> sur le congé </span>
+                                </button>
+
+                                <button   mat-menu-item>
+                                    <mat-icon class="text-primary">check_circle</mat-icon>
+                                    <span>Indique que le congé a été <code class="fw-bolder">consulté</code> </span>
+                                </button>
+                                <button   mat-menu-item>
+                                    <mat-icon class="text-warning">check_circle</mat-icon>
+                                    <span>Indique une <code class="fw-bolder">nouvelle demande</code>  de congé </span>
+                                </button>
+
+                            </mat-menu>
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row gx-3">
+                            <div class="col-xxl-12 col-sm-12 col-12">
+
+                                <div class="table-responsive mt-4">
+                                    <table class="table table-striped m-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Réf</th>
+                                                <th class="text-center">Motif</th>
+                                                <th class="text-center">Fonction</th>
+                                                <th class="text-center">Service</th>
+                                                <th class="text-center">Etat</th>
+                                                <th class="text-center">Statut</th>
+                                                <th class="text-center">Date de publication</th>
+                                                <th class="text-center">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @for (customer_conge of list_customer_conges | paginate: { itemsPerPage: 20, currentPage: p }; track $index) {
+
+                                                <tr >
+                                                    <td class="text-center">{{ customer_conge.conge_ref }}</td>
+                                                    <td  style="white-space: unset !important;">
+                                                        {{ customer_conge.motif  }}
+                                                    </td>
+
+                                                    <td class="text-center"><p class=" fs-6">{{ customer_conge.fonction }}</p></td>
+                                                    <td class="text-center"><p class=" fs-6">{{ customer_conge.service }}</p></td>
+                                                    <td class="text-center">
+
+                                                        <button [matTooltip]="customer_conge.new_actions == 1?'Consulter':'Nouveau'"  mat-icon-button>
+                                                            <mat-icon [class]="customer_conge.new_actions == 1?'text-primary':'text-warning'">check_circle</mat-icon>
+                                                        </button>
+
+                                                    </td>
+                                                    <td class="text-center">
+
+                                                        @if (customer_conge.status_on == 1) {
+                                                            <button matTooltip="Approuvée" mat-icon-button>
+                                                                <mat-icon class="text-primary">verified</mat-icon>
+                                                            </button>
+                                                        }
+                                                        @if (customer_conge.status_off == 1) {
+                                                            <button matTooltip="Réjetée"  mat-icon-button>
+                                                                <mat-icon class="text-red">verified</mat-icon>
+                                                            </button>
+                                                        }
+                                                        @if (customer_conge.status_on == 0 && customer_conge.status_off == 0) {
+                                                            <button matTooltip="Aucune action"  mat-icon-button>
+                                                                <mat-icon class="text-warning">unpublished</mat-icon>
+                                                            </button>
+                                                        }
+
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <p class=" fw-bolder fs-6">{{ customer_conge.created_at | transformDate: 'd MMMM yyyy, à HH:mm' }}</p>
+
+                                                    </td>
+
+                                                    <td class="text-end">
+                                                        <button mat-mini-fab color="primary"
+                                                            [matMenuTriggerFor]="beforeMenu">
+                                                            <mat-icon>more_vert</mat-icon>
+                                                        </button>
+                                                        <mat-menu #beforeMenu="matMenu"
+                                                            xPosition="before">
+                                                            <button (click)="consulteCustomerConge(customer_conge)" mat-menu-item>
+                                                                <mat-icon>visibility</mat-icon>
+                                                                Consulter
+                                                            </button>
+                                                            <button (click)="updateCustomerConge(customer_conge.slug)"  mat-menu-item>
+                                                                <mat-icon>border_color</mat-icon>
+                                                                Modifier
+                                                            </button>
+                                                            <button (click)="openDeleDialog(customer_conge.slug)" mat-menu-item>
+                                                                <mat-icon>delete</mat-icon>
+                                                                Supprimer
+                                                            </button>
+                                                        </mat-menu>
+                                                    </td>
+
+                                                </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="div text-center">
+                                    <pagination-controls
+                                        (pageChange)="p = $event"
+                                        previousLabel="Précédent"
+                                        nextLabel="Suivant"
+                                    >
+
+                                    </pagination-controls>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Row end -->
+    </div>
+</div>
+
+
+
+
+<ngx-spinner type="ball-circus" size="large" color="#ef8f01"
+    [fullScreen]="true">
+    <p style="color: #fff; font-size: 1.2rem"> Chargement en cours... </p>
+</ngx-spinner>

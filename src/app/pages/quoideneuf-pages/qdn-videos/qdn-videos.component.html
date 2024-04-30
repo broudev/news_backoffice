@@ -1,0 +1,116 @@
+<div class="hero-header">
+    <div class="container-fluid">
+        <!-- Row start -->
+        <div class="row gx-3">
+            <div class="col-xxl-12">
+                <div class="card">
+                    <mat-progress-bar *ngIf="loading == true" mode="indeterminate"></mat-progress-bar>
+                    <div class="card-header">
+                        <div class="row justify-content-between mb-3">
+
+                            <div class="col-lg-6">
+                                <h1 class="text-start">Liste des vidéos | Total: {{media_number}}
+                                    <span>
+                                        <button *ngIf="news_is_founded > 0" mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+
+                                            {{ news_is_founded }}
+                                        </button>
+                                    </span>
+                                </h1>
+                            </div>
+                            <div class="col-lg-6 text-end">
+                                <button (click)="openMediaDialog()"  mat-fab extended   color="primary">
+                                    <mat-icon>add_circle</mat-icon>
+                                    Ajouter nouvelle vidéo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+
+                        <div class="row gx-3 mb-3">
+
+
+                            <div class="col-lg-4">
+                                <mat-form-field>
+                                    <mat-label>Date début</mat-label>
+                                    <input [(ngModel)]="date_debut" matInput [matDatepicker]="Date_debut">
+                                    <mat-datepicker-toggle matIconSuffix [for]="Date_debut"></mat-datepicker-toggle>
+                                    <mat-datepicker #Date_debut></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-4">
+                                <mat-form-field>
+                                    <mat-label>Date fin</mat-label>
+                                    <input [(ngModel)]="date_fin" matInput [matDatepicker]="Date_fin">
+                                    <mat-datepicker-toggle matIconSuffix [for]="Date_fin"></mat-datepicker-toggle>
+                                    <mat-datepicker #Date_fin></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+
+
+
+
+
+                            <div class="col-lg-4">
+                                <button (click)="filterMediaData()" mat-fab extended class="w-100" color="primary">
+                                    <mat-icon>search</mat-icon>
+                                    Rechercher
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <div class="row gx-3 mb-3">
+                            <div class="col-xl-6 col-md-6 col-sm-6 col-12" *ngFor="let video of media_list | paginate: { itemsPerPage: 20, currentPage: p }">
+                                <div class="card">
+                                    <div class="card-img">
+                                        <youtube-player [videoId]="video.video_url"></youtube-player>
+                                    </div>
+                                    <div class="card-header">
+                                        <div class="card-title">{{ video.galerie_libelle }} </div>
+                                        <p class="text-muted">{{ video.galerie_description }}</p>
+                                    </div>
+                                    <div class="card-body">
+
+                                        <b>{{ video.description }}</b>
+
+                                        <div class="d-flex justify-content-between">
+                                            <button mat-fab extended color="primary" (click)="editGalerie(video)">
+                                                <mat-icon>edit</mat-icon>
+                                                Editer
+                                            </button>
+                                            <button mat-fab extended color="warn" (click)="deleteGalerie(video.id)" >
+                                                <mat-icon>delete</mat-icon>
+                                                Supprimer
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="div text-center mt-4">
+                        <pagination-controls
+                            (pageChange)="p = $event"
+                            previousLabel="Précédent"
+                            nextLabel="Suivant"
+                        >
+
+                        </pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Row end -->
+    </div>
+</div>
+
+
+<ngx-spinner type = "ball-circus" size = "large" color = "#fe0000" [fullScreen] = "true">
+    <p style="color: #fff; font-size: 1.2rem" > Chargement en cours... </p>
+</ngx-spinner>

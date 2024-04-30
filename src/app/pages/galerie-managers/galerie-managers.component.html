@@ -1,0 +1,98 @@
+<div class="hero-header ">
+    <div class="container-fluid">
+        <!-- Row start -->
+        <div class="row gx-3">
+            <div class="col-xxl-12">
+                <div class="card">
+                    <mat-progress-bar *ngIf="loading == true" mode="indeterminate"></mat-progress-bar>
+                    <div class="card-header">
+                        <div class="row justify-content-between mb-3">
+
+                            <div class="col-lg-6">
+                                <h1 class="text-start">Liste des images | Total: {{galerie_number}}
+                                    <span>
+                                        <button *ngIf="news_is_founded > 0" mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+
+                                            {{ news_is_founded }}
+                                        </button>
+                                    </span>
+                                </h1>
+                            </div>
+                            <div class="col-lg-6 text-end">
+                                <button (click)="openGalerieDialog()"  mat-fab extended   color="primary">
+                                    <mat-icon>add_circle</mat-icon>
+                                    Ajouter nouvelle image
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+
+                        <div class="row gx-3 mb-3">
+
+                            <div class="col-lg-12">
+                                <form class="example-form">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Rechercher par mot clé</mat-label>
+                                        <input  (input)="searchKeyWords($event)" matInput placeholder="Rechercher par mot clé">
+                                        <mat-icon matSuffix>search</mat-icon>
+                                    </mat-form-field>
+                                </form>
+                            </div>
+
+
+
+
+                        </div>
+
+                        <div class="row gx-3 mb-3">
+                            <div class="col-lg-3 col-md-6" *ngFor="let image of galerie_list | paginate: { itemsPerPage: 20, currentPage: p }">
+                                <div class="card">
+                                    <div class="card-img">
+                                        <img [src]="image.galerie_img_url" class="card-img-top img-fluid" alt="Google Admin">
+                                    </div>
+                                    <div class="card-header">
+                                        <div class="card-title">{{ image.galerie_libelle }} </div>
+                                        <p class="text-muted">{{ image.galerie_description }}</p>
+                                    </div>
+                                    <div class="card-body">
+
+                                        <div class="d-flex justify-content-between">
+                                            <button mat-fab extended  color="primary" (click)="editGalerie(image)">
+                                                <mat-icon>edit_square</mat-icon>
+                                                Editer
+                                            </button>
+                                            <button mat-fab extended  color="warn" (click)="deleteGalerie(image.slug)" >
+                                                <mat-icon>delete</mat-icon>
+                                                Supprimer
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="div text-center mt-4">
+                        <pagination-controls
+                            (pageChange)="p = $event"
+                            previousLabel="Précédent"
+                            nextLabel="Suivant"
+                        >
+
+                        </pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Row end -->
+    </div>
+</div>
+
+
+<ngx-spinner type = "ball-circus" size = "large" color = "#fe0000" [fullScreen] = "true">
+    <p style="color: #fff; font-size: 1.2rem" > Chargement en cours... </p>
+</ngx-spinner>

@@ -1,0 +1,170 @@
+<div class="hero-header">
+    <div class="container-fluid">
+        <!-- Row start -->
+        <div class="row gx-3">
+            <div class="col-xxl-12">
+                <div class="card">
+                    @if (loading == true) {
+                        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    }
+                    <div class="card-body">
+                        <div class="row gx-3 mb-3">
+                            <div class="col-lg-12">
+                                <h1 class="text-start">Liste des articles
+                                    <span>
+                                        @if (news_is_founded > 0) {
+                                            <button  mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                                                {{ news_is_founded }}
+                                            </button>
+                                        }
+                                    </span>
+                                </h1>
+                            </div>
+                            <div class="col-lg-3">
+                                <mat-form-field>
+                                    <mat-label>Date début</mat-label>
+                                    <input [(ngModel)]="date_debut" matInput [matDatepicker]="Date_debut">
+                                    <mat-datepicker-toggle matIconSuffix [for]="Date_debut"></mat-datepicker-toggle>
+                                    <mat-datepicker #Date_debut></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-3">
+                                <mat-form-field>
+                                    <mat-label>Date fin</mat-label>
+                                    <input [(ngModel)]="date_fin" matInput [matDatepicker]="Date_fin">
+                                    <mat-datepicker-toggle matIconSuffix [for]="Date_fin"></mat-datepicker-toggle>
+                                    <mat-datepicker #Date_fin></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-lg-2">
+                                <mat-form-field apparence="outlet">
+                                    <mat-label>Rubrique</mat-label>
+                                    <mat-select  multiple (selectionChange)="onChange_rubrique($event)">
+                                        @for (rubrique of list_rubrique; track $index) {
+                                            <mat-option  [value]="rubrique.id">{{ rubrique.rubrique }}</mat-option>
+                                        }
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-lg-2">
+                                <mat-form-field apparence="outlet">
+                                    <mat-label>Genre</mat-label>
+                                    <mat-select  multiple (selectionChange)="onChange_genre($event)">
+                                        @for (genre of list_genre; track $index) {
+                                            <mat-option  [value]="genre.id">{{ genre.genre }}</mat-option>
+                                        }
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-lg-2">
+                                <button (click)="filterArticleData()" mat-fab extended class=" w-100" color="primary">
+                                    <mat-icon>search</mat-icon>
+                                    Rechercher
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <div class="row gx-3">
+                            <div class="col-xxl-12 col-sm-12 col-12">
+                                <div class="table-responsive mb-4">
+                                    <table class="table table-striped m-0">
+                                        <thead>
+                                            <tr>
+                                                <th>#ID</th>
+                                                <th>Titre</th>
+                                                <th>Auteur</th>
+                                                <th>Rubrique</th>
+                                                <th>Genre</th>
+                                                <th>Statut</th>
+                                                <th>Date de publication</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @for (article of list_article | paginate: { itemsPerPage: 20, currentPage: p }; track $index) {
+
+                                                <tr >
+                                                    <td>#
+                                                        {{ $index + 1 }}
+                                                        <img
+                                                            class="rounded me-2"
+                                                            [src]="article.flag"
+                                                            alt="Image article quoideneuf"
+                                                            style="width: 30px !important; height: 20px !important"
+                                                        />
+                                                    </td>
+                                                    <td width="400" style="white-space: unset !important;">
+                                                        <a [routerLink]="['/quoideneufs.view-article',article.slug]" class="text-red  lh-base">
+                                                            {{ article.titre }}
+                                                        </a>
+                                                    </td>
+                                                    <td>{{ article.author }}</td>
+                                                    <td>{{ article.rubrique }}</td>
+                                                    <td>{{ article.genre }}</td>
+                                                    <td class="text-center">
+                                                        <span [ngClass]=" article.status == 1?'badge shade-green mb-2 me-4':'badge shade-red mb-2 me-4'">
+                                                            {{ article.status == 1?'Publié':'Pas publié'}}
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        {{ article.created_at | date: 'd MMMM yyyy, à HH:mm' }}
+                                                    </td>
+
+                                                    <td class="text-end">
+                                                        <button mat-mini-fab color="primary"
+                                                            [matMenuTriggerFor]="beforeMenu">
+                                                            <mat-icon>more_vert</mat-icon>
+                                                        </button>
+                                                        <mat-menu #beforeMenu="matMenu"
+                                                            xPosition="before">
+                                                            <button [routerLink]="['/quoideneufs.view-article', article.slug]" mat-menu-item>
+                                                                <mat-icon>visibility</mat-icon>
+                                                                Consulter
+                                                            </button>
+                                                            <button [routerLink]="['/quoideneufs.edit-article', article.slug]" mat-menu-item>
+                                                                <mat-icon>border_color</mat-icon>
+                                                                Modifier
+                                                            </button>
+                                                            <button (click)="deleteArticle(article.slug)" mat-menu-item>
+                                                                <mat-icon>delete</mat-icon>
+                                                                Supprimer
+                                                            </button>
+                                                        </mat-menu>
+                                                    </td>
+
+                                                </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="div text-center">
+                                    <pagination-controls
+                                        (pageChange)="p = $event"
+                                        previousLabel="Précédent"
+                                        nextLabel="Suivant"
+                                    >
+
+                                    </pagination-controls>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Row end -->
+    </div>
+</div>
+
+<ngx-spinner type = "ball-circus" size = "large" color = "#fe0000" [fullScreen] = "true">
+    <p style="color: #fff; font-size: 1.2rem" > Chargement en cours... </p>
+</ngx-spinner>
+

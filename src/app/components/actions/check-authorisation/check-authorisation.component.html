@@ -1,0 +1,41 @@
+
+
+
+
+<mat-card class="example-card rounded">
+    <mat-progress-bar *ngIf="is_loading == true" mode="indeterminate"></mat-progress-bar>
+    <mat-card-header class="mb-2 d-flex justify-content-end">
+        <button mat-icon-button mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-card-header>
+
+    <mat-card-content>
+        <div class="text-center mb-3">
+            <img src="assets/key.svg" width="80" alt="" srcset="">
+        </div>
+        <div class="row mt-2 justify-content-center">
+            <div class="col-md-12 text-center">
+
+                <p class="text-primary fw-bolder fs-5 mb-3">
+                    Veuillez saisir le code d'autorisation du responsable.
+                </p>
+
+                <p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Veuillez saisir le code d'autorisation</mat-label>
+                        <input  matInput
+                            placeholder="Veuillez saisir le code d'autorisation"
+                            [(ngModel)]="authorization"
+                            (ngModelChange)="checkAuthorization($event)"
+                        >
+                        <mat-icon matSuffix>key</mat-icon>
+                    </mat-form-field>
+                </p>
+            </div>
+
+        </div>
+    </mat-card-content>
+    
+</mat-card>
+

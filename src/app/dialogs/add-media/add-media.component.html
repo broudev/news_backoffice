@@ -1,0 +1,74 @@
+<h1 mat-dialog-title>Ajouter un média</h1>
+@if (loading == true) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
+<div mat-dialog-content>
+    <div class="row mt-2">
+        <div class="col-md-12 col-lg-12">
+            <mat-form-field appearance="outline">
+                <mat-label>Intitulé du média <code class="fs-4">*</code></mat-label>
+                <input [(ngModel)]="description" matInput required placeholder="Intitulé du média">
+            </mat-form-field>
+        </div>
+
+
+
+        <div class="col-md-12 col-lg-12">
+            <mat-form-field appearance="outline">
+                <mat-label>Le type du média</mat-label>
+                <mat-select [(value)]="selectedTypeOption" (selectionChange)="onChangeTypeMedia($event)">
+                    @for (type_media of list_type_media; track $index) {
+                        <mat-option  [value]="type_media.type_media">{{ type_media.type_media }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        @if (type_media == 'audio') {
+            <div class="col-md-12">
+                <label for="formFileLg" class="form-label">Joindre une image <code>*</code>  </label>
+                <input (change)="uploadFile($event)" class="form-control form-control-lg" id="formFileLg" type="file">
+            </div>
+        }
+        @if (type_media == 'vidéo' || selectedTypeOption == 'vidéo') {
+
+            <div  class="col-md-12 col-lg-12">
+                <mat-form-field appearance="outline">
+                    <mat-label>La clé de la vidéo <code class="fs-4">*</code></mat-label>
+                    <input [(ngModel)]="urlVideo" matInput required placeholder="La clé de la vidéo">
+                </mat-form-field>
+            </div>
+        }
+
+        @if (img_update == false) {
+            <div class="d-flex justify-content-center my-2" >
+                <img [src]="old_image" class="card-img-top " style="width: 18%;" alt="...">
+                <button  (click)="isUpdateImg()" mat-fab extended color="primary">
+                    <mat-icon class="mat-18 mr-1">edit</mat-icon>
+                        Modifier
+                </button>
+            </div>
+        }
+
+
+
+    </div>
+</div>
+<div mat-dialog-actions class="d-flex justify-content-between">
+    <button mat-fab extended color="primary" mat-dialog-close>
+        <mat-icon>reply</mat-icon>
+        Annuler
+    </button>
+    @if (is_update == true) {
+        <button  mat-fab extended color="warn" (click)="updateMedia()">
+            <mat-icon class="mat-18 mr-1">edit</mat-icon>
+            Modifier
+        </button>
+    }
+    @if (is_update == false) {
+        <button mat-fab extended color="warn" (click)="saveMedia()">
+            <mat-icon class="mat-18 mr-1">save</mat-icon>
+            Enregistrer
+        </button>
+    }
+</div>

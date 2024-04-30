@@ -1,0 +1,73 @@
+<div class="hero-header ">
+    <div class="container-fluid">
+        <!-- Row start -->
+        <div class=" row mt-4 mb-2 justify-content-center">
+            <div class="col-xxl-6 col-lg-6 col-md-8 col-xs-12" >
+                <mat-card class="text-center">
+                    <mat-card-content>
+                        <button class="me-2 text-primary" (click)="returnBack()" mat-raised-button>
+                            <mat-icon>arrow_back</mat-icon>
+                            Aller à la liste
+                        </button>
+                        <button class="me-2" (click)="editArticle(articleData.slug)" mat-raised-button>
+                            <mat-icon>edit_square</mat-icon>
+                            Modifier
+                        </button>
+
+
+                        <button class="me-2" (click)="pushArticle(articleData.slug)" mat-raised-button [color]="articleData.status == 1?'warn':'primary'">
+                            <mat-icon>{{ articleData.status == 1?'download_for_offline':'publish' }}</mat-icon>
+                            {{ articleData.status == 1?'Retirer':'Publier' }}
+                        </button>
+
+                    </mat-card-content>
+                </mat-card>
+            </div>
+
+        </div>
+        <div class="row gx-3 justify-content-center">
+            <div class="col-xxl-6">
+                <div class="card">
+                    <div class="card-img p-1">
+                        <img [src]="articleData.media_url" class="card-img-top img-fluid" alt="image illustration">
+                    </div>
+                    <div class="card-header">
+                        <div class="row mb-3">
+                            <div class="col-12 mb-4 ">
+                                <button mat-button>
+                                    <mat-icon>person</mat-icon>
+                                    {{ articleData.author }}
+                                </button>
+
+                                <button mat-button>
+                                    <mat-icon>category</mat-icon>
+                                    {{ articleData.rubrique }}
+                                </button>
+
+                            </div>
+                            <div class="col-3">
+                                <div class="badge--group">
+                                    <p class="m-2 fw-bolder">{{ articleData.genre }}</p>
+                                </div>
+                            </div>
+                            <div class="col-9 text-end">
+                                <div class="pricing d-flex justify-content-end">
+                                    <p class="text-primary fw-bolder fs-6 mb-0 me-2">Mis en ligne {{ articleData.created_at | date: 'le d MMMM yyyy, à HH:mm' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-title" >{{ title }}</div>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-5"> {{ lead }}</p>
+
+                        <p class="card-text" [innerHTML]="content"></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Row end -->
+    </div>
+</div>
+

@@ -1,0 +1,290 @@
+<div class="hero-header ">
+    <div class="container-fluid">
+        <!-- Row start -->
+        <div class="row gx-3">
+            <div class="col-xxl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row gx-3">
+                            <div class="col-xl-4 col-sm-6 col-12">
+                                <div class="d-flex box-bdr-blue rounded-2 align-items-center p-3  mb-3">
+                                    <div class="box-bdr-blue p-3 rounded-2">
+                                        <mat-icon>feed</mat-icon>
+                                    </div>
+                                    <div class="ms-4">
+                                        <div id="received"></div>
+                                        <h3 class="fw-bolder ">{{ all_article }}</h3>
+                                        <p class="m-0 fw-bolder text-primary">Tous les articles</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-sm-6 col-12">
+
+                                <div class="d-flex box-bdr-green rounded-2 align-items-center p-3 mb-3">
+                                    <div class="box-bdr-green p-3 rounded-2">
+                                        <mat-icon class="text-green">feed</mat-icon>
+                                    </div>
+                                    <div class="ms-4">
+                                        <div id="processing"></div>
+                                        <h3 class="fw-bolder ">{{ article_ispublished }}</h3>
+                                        <p class="m-0 text-primary fw-bolder">Articles publiés</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-sm-6 col-12">
+                                <div class="d-flex box-bdr-red rounded-2 align-items-center p-3">
+                                    <div class="box-bdr-red p-3 rounded-2">
+                                        <mat-icon class="text-red font-2x">feed</mat-icon>
+                                    </div>
+                                    <div class="ms-4">
+                                        <div id="delivered"></div>
+                                        <h3 class="fw-bolder ">{{ article_nopublished }}</h3>
+                                        <p class="m-0 text-light">Articles non publiés</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row gx-3">
+                            <div class="col-lg-12">
+                                <h1 class="text-start fw-bolder">Rapport hebdomadaire</h1>
+                            </div>
+
+                        </div>
+                        <div class="row gx-3">
+							<div class="col-md-6 col-lg-6 col-xl-6">
+								<div class="card">
+                                    <div class="card-header">
+										<div class="card-title">Dépêches</div>
+									</div>
+									<div class="card-body">
+										<div class="progress-wrapper mb-3">
+											<div class="progress-info">
+												<span class="fw-bolder">Tous les pays</span>
+												<span class="text-danger fw-bolder ">{{ count_all_depeche }}</span>
+											</div>
+											<div class="progress">
+                                                <div class="progress-bar rounded-pill" role="progressbar" [style.width]="count_all_depeche +'%'" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                    {{ count_all_depeche }}
+                                                </div>
+											</div>
+										</div>
+
+                                        <div class="progress-wrapper mb-3">
+											<div class="progress-info">
+												<span class="fw-bolder">Côte d'Ivoire</span>
+												<span class="text-danger fw-bolder ">{{ count_all_depeche_from_ci }}</span>
+											</div>
+											<div class="progress small">
+												<div class="progress-bar shade-primary" role="progressbar" [style.width]=" count_all_depeche_from_ci +'%'" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+										</div>
+
+                                        <div class="progress-wrapper mb-3">
+											<div class="progress-info">
+												<span class="fw-bolder">Burkina Faso</span>
+												<span class="text-danger fw-bolder ">{{ count_all_depeche_from_bf }}</span>
+											</div>
+											<div class="progress small">
+												<div class="progress-bar shade-primary" role="progressbar" [style.width]=" count_all_depeche_from_bf +'%'" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+										</div>
+
+                                        <div class="progress-wrapper mb-3">
+											<div class="progress-info">
+												<span class="fw-bolder">Mali</span>
+												<span class="text-danger fw-bolder ">{{ count_all_depeche_from_ml }}</span>
+											</div>
+											<div class="progress small">
+												<div class="progress-bar shade-primary" role="progressbar" [style.width]=" count_all_depeche_from_ml +'%'" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-lg-6 col-xl-6">
+								<div class="card">
+                                    <div class="card-header">
+										<div class="card-title">Flashes</div>
+									</div>
+									<div class="card-body">
+										<div class="progress-wrapper mb-3">
+											<div class="progress-info">
+												<span class="fw-bolder">Tous les pays</span>
+												<span class="text-danger fw-bolder ">{{ count_all_flash }}</span>
+											</div>
+											<div class="progress">
+                                                <div class="progress-bar rounded-pill" role="progressbar" [style.width]="count_all_flash +'%'" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                    {{ count_all_flash }}
+                                                </div>
+											</div>
+										</div>
+
+                                        <div class="progress-wrapper mb-3">
+											<div class="progress-info">
+												<span class="fw-bolder">Côte d'Ivoire</span>
+												<span class="text-danger fw-bolder ">{{ count_all_flash_from_ci }}</span>
+											</div>
+											<div class="progress small">
+												<div class="progress-bar shade-red" role="progressbar" [style.width]=" count_all_flash_from_ci +'%'" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+										</div>
+
+                                        <div class="progress-wrapper mb-3">
+											<div class="progress-info">
+												<span class="fw-bolder">Burkina Faso</span>
+												<span class="text-danger fw-bolder ">{{ count_all_flash_from_bf }}</span>
+											</div>
+											<div class="progress small">
+												<div class="progress-bar shade-red" role="progressbar" [style.width]=" count_all_flash_from_bf +'%'" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+										</div>
+
+                                        <div class="progress-wrapper mb-3">
+											<div class="progress-info">
+												<span class="fw-bolder">Mali</span>
+												<span class="text-danger fw-bolder ">{{ count_all_flash_from_ml }}</span>
+											</div>
+											<div class="progress small">
+												<div class="progress-bar shade-red" role="progressbar" [style.width]=" count_all_flash_from_ml +'%'" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Row end -->
+    </div>
+</div>
+
+<div class="hero-body">
+    <!-- Row start -->
+
+    <div class="row gx-3">
+        <div class="col-xxl-8 col-sm-7 col-7">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="card-title">
+                        Les dépêches récentes
+                        <span>
+                            <button *ngIf="news_is_founded > 0" mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+
+                                {{ news_is_founded }}
+                            </button>
+                        </span>
+                    </div>
+                    <button [routerLink]="['/redaction.create-depeche']"   mat-fab extended   color="primary">
+                        <mat-icon>add_circle</mat-icon>
+                        Ecrire une dépêche
+                    </button>
+                </div>
+                <div class="card-body">
+
+                    <div class="row gx-3">
+                        <div class="col-xxl-12 col-sm-12 col-12">
+                            <div class="table-responsive mb-4">
+                                <table class="table table-striped m-0">
+                                    <thead>
+                                        <tr>
+                                            <th>#ID</th>
+                                            <th>Pays</th>
+                                            <th>Titre</th>
+                                            <th>Auteur</th>
+                                            <th>Rubrique</th>
+                                            <th>Statut</th>
+                                            <th>Date de publication</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let article of recente_depeche | paginate: { itemsPerPage: 20, currentPage: p } ; let i = index">
+
+                                            <td>#{{ i + 1 }}</td>
+                                            <td>
+                                                <img [src]="article.flag" width="20" alt="">
+                                            </td>
+                                            <td style="white-space: unset !important;">
+                                                <a [routerLink]="['/redaction.view-depeche',article.slug]" class="text-red" [innerHTML]="article.titre">
+
+                                                </a>
+                                            </td>
+                                            <td>{{ article.author }}</td>
+                                            <td>{{ article.rubrique_libelle }}</td>
+                                            <td class="text-center">
+                                                <span [ngClass]=" article.status == 1?'badge shade-green mb-2 me-4':'badge shade-red mb-2 me-4'">
+                                                    {{ article.status == 1?'Publié':'Pas publié'}}
+                                                </span>
+                                            </td>
+                                            <td class="text-end">
+                                                {{ article.created_at | date: 'd MMMM yyyy, à HH:mm' }}</td>
+
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="div text-center">
+                                <pagination-controls
+                                    (pageChange)="p = $event"
+                                    previousLabel="Précédent"
+                                    nextLabel="Suivant"
+                                >
+
+                                </pagination-controls>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xxl-4 col-sm-5 col-5">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="card-title">
+                        Les flashes récents
+                        <span>
+                            <button *ngIf="news_is_founded > 0" mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+
+                                {{ news_is_founded }}
+                            </button>
+                        </span>
+                    </div>
+                    <button [routerLink]="['redaction.create-flash']"   mat-fab extended   color="primary">
+                        <mat-icon>add_circle</mat-icon>
+                        Ecrire un flash
+                    </button>
+                </div>
+
+                <div class="card-body">
+                    @for (flash of recente_flashes; track $index) {
+
+                        <div  class="alert alert-light fade show" role="alert">
+                            <img [src]="flash.flag" class="me-3 mb-3" width="30" alt="">
+                            <p class="text-danger fw-bolder">
+                                {{ flash.contenus }}
+                            </p>
+                            <p>{{ flash.created_at | date: 'dd MMMM YYYY H:mm'  }}</p>
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Row end -->
+</div>
+
+<ngx-spinner type = "ball-circus" size = "large" color = "#ef8f01" [fullScreen] = "true">
+    <p style="color: #fff; font-size: 1.2rem" > Chargement en cours... </p>
+</ngx-spinner>
